@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aye Sandar | Web Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" type="image/png" href="images/photo.jpg">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-1: #0a0f1f;
+      --bg-2: #131a33;
+      --card: rgba(15, 23, 42, 0.72);
+      --line: rgba(148, 163, 184, 0.24);
+      --text: #f8fafc;
+      --muted: #9fb0ca;
+      --accent: #22d3ee;
+      --accent-2: #f59e0b;
+      --accent-3: #34d399;
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(34, 211, 238, 0.25), transparent 38%),
+        radial-gradient(circle at 85% 12%, rgba(245, 158, 11, 0.22), transparent 34%),
+        radial-gradient(circle at 50% 100%, rgba(52, 211, 153, 0.2), transparent 40%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+    }
+
+    .wrapper {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav {
+      position: sticky;
+      top: 18px;
+      z-index: 30;
+      margin: 18px auto 0;
+      width: min(1120px, 92%);
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(10px);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px;
+    }
+
+    .brand {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .nav ul {
+      list-style: none;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(15, 23, 42, 0.65);
+      color: var(--text);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-direction: column;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: #d7ecff;
+    }
+
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      opacity: 0.88;
+      transition: 0.25s ease;
+    }
+
+    .nav a:hover {
+      color: var(--accent-2);
+      opacity: 1;
+    }
+
+    .hero {
+      min-height: 84vh;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 28px;
+      padding: 80px 0 38px;
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid rgba(34, 211, 238, 0.45);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      color: #c9f4fb;
+      background: rgba(34, 211, 238, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 14px;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(2.2rem, 7vw, 4.8rem);
+      line-height: 1.02;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 span {
+      color: var(--accent-2);
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+    }
+
+    .lead {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .edu-highlight {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(245, 158, 11, 0.48);
+      background: linear-gradient(140deg, rgba(245, 158, 11, 0.18), rgba(34, 211, 238, 0.08));
+      color: #ffe8bf;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    .edu-highlight strong {
+      font-family: "Chakra Petch", sans-serif;
+      letter-spacing: 0.03em;
+      color: #fff3d6;
+    }
+
+    .btn {
+      border: 1px solid transparent;
+      padding: 11px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.25s ease;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent), #06b6d4);
+      color: #04111d;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(34, 211, 238, 0.32);
+    }
+
+    .btn-ghost {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.45);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+    }
+
+    .photo-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .photo-ring {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border: 2px dashed rgba(34, 211, 238, 0.4);
+      border-radius: 50%;
+      animation: spin 16s linear infinite;
+    }
+
+    .photo {
+      width: min(290px, 82vw);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: var(--shadow);
+      transform: rotate(-3deg);
+    }
+
+    .floating-tag {
+      position: absolute;
+      right: 4%;
+      bottom: 12%;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(2, 6, 23, 0.75);
+      backdrop-filter: blur(8px);
+      color: #d3e4ff;
+    }
+
+    section {
+      padding: 58px 0;
+    }
+
+    .section-title {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 68ch;
+      margin-bottom: 24px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .edu-card {
+      border-color: rgba(245, 158, 11, 0.4);
+      background:
+        radial-gradient(circle at 85% 15%, rgba(245, 158, 11, 0.18), transparent 45%),
+        rgba(15, 23, 42, 0.74);
+    }
+
+    .edu-card h3 {
+      color: var(--accent-2);
+    }
+
+    .card p {
+      color: #c6d4eb;
+      font-size: 0.95rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .project {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(2, 6, 23, 0.08), rgba(2, 6, 23, 0.72));
+      pointer-events: none;
+    }
+
+    .project img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      filter: saturate(1.08);
+    }
+
+    .project-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #8be9ff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .project-link:hover {
+      color: var(--accent-2);
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.34);
+      color: #d8e7ff;
+      background: rgba(15, 23, 42, 0.55);
+    }
+
+    .github-showcase {
+      margin-top: 18px;
+      border: 1px solid rgba(34, 211, 238, 0.38);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(34, 211, 238, 0.2), transparent 45%),
+        radial-gradient(circle at 88% 15%, rgba(245, 158, 11, 0.2), transparent 40%),
+        rgba(2, 6, 23, 0.72);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .github-showcase h3 {
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+      color: #e8fbff;
+    }
+
+    .github-showcase p {
+      color: #c9d9ef;
+      max-width: 62ch;
+      font-size: 0.96rem;
+    }
+
+    .github-actions {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skills-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-pill {
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      background: rgba(52, 211, 153, 0.08);
+      color: #d9fff2;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.86rem;
+    }
+
+    .contact {
+      text-align: center;
+      padding-bottom: 80px;
+    }
+
+    .contact .card {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .contact-links {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 54px;
+      }
+
+      .photo-wrap {
+        order: -1;
+      }
+
+      .about-grid,
+      .projects-grid,
+      .skills-wrap,
+      .github-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .github-actions {
+        justify-content: flex-start;
+      }
+
+      .nav {
+        border-radius: 16px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        top: 10px;
+        border-radius: 16px;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        row-gap: 10px;
+      }
+
+      .brand {
+        text-align: left;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .nav ul.nav-links {
+        display: none;
+        grid-column: 1 / -1;
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .nav ul.nav-links.open {
+        display: flex;
+      }
+
+      .nav a {
+        font-size: 0.85rem;
+        display: block;
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: rgba(15, 23, 42, 0.45);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav {
+        padding: 10px;
+      }
+
+      .brand {
+        font-size: 0.88rem;
+      }
+
+      .nav ul {
+        gap: 6px;
+      }
+
+      .nav a {
+        padding: 8px 10px;
+      }
+
+      .hero h1 {
+        line-height: 1.08;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay"></div>
+
+  <nav class="nav">
+    <div class="brand">Aye Sandar</div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="nav-links" class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#developer">Developer Journey</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="wrapper">
+    <section class="hero reveal" id="home">
+      <div>
+        <div class="badge">Available for Freelance + Remote Work</div>
+        <h1>
+          I Build <span id="dynamic-word">Fast</span><br />
+          Web Experiences.
+        </h1>
+        <p class="lead">
+          Hi, I'm Aye Sandar, a web developer specializing in PHP and Laravel. I focus on building and maintaining web 
+            applications that support enterprise-level IT services and digital solutions.  .
+          I enjoy turning complex ideas into smooth digital products.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-ghost" href="#contact">Let's Talk</a>
+        </div>
+        <div class="edu-highlight">
+          <span>Academic</span>
+          <strong>B.C.Sc (Computer Science)</strong>
+        </div>
+      </div>
+
+      <div class="photo-wrap">
+        <div class="photo-ring"></div>
+        <!-- Replace this URL with your own photo path -->
+        <img
+          class="photo"
+          src="images/photo.jpg"
+          alt="Portrait of Alex Carter"
+        />
+        <div class="floating-tag">Backend + (php/laravel web developer)</div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">
+        Passionate Web Developer with a strong background in Computer Science and hands-on 
+        experience in building web applications using PHP Laravel.  
+        Graduated from Computer University Studies (Pyay) in 2024 with a Bachelor of Computer 
+        Science(B.C.Sc).  
+        I craft modern websites and web apps with attention to accessibility, motion, and maintainable architecture.
+        I work across product websites, admin dashboards, and custom client platforms. 
+      </p>
+      <div class="about-grid">
+        <article class="card">
+          <h3>Bio</h3>
+          <p>
+            3+ years of hands-on web development experience. I specialize in php laravel backend,
+            API integration, and polished user interfaces.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Current Focus</h3>
+          <p>
+            Building design-driven web products with php, laravel, and performant CSS architecture.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Work Style</h3>
+          <p>
+            Clear communication, fast iteration, and a strong focus on shipping features that deliver user value.
+          </p>
+        </article>
+        <article class="card edu-card">
+          <h3>Education</h3>
+          <p>
+            B.C.Sc (Computer Science) graduate with strong fundamentals in software engineering, web architecture,
+            and problem solving.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-subtitle">A few selected works. Update with your real projects and links.</p>
+      <div class="projects-grid">
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80" alt="Project One" />
+          <a href="https://moht.fwsdemopages.com/"><h3>MOHT QR Dashboard</h3></a>
+          <p>Inclue static and dynamic qr (company site)</p>
+          <div class="stack">
+            <span class="chip">PHP</span>
+            <span class="chip">Laravel</span>
+            <span class="chip">JavaScript</span>
+          </div>
+          <a class="project-link" href="https://github.com/Puja5625" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
+        </article>
+
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&w=1200&q=80" alt="Project Two" />
+          <a href="https://github.com/Puja5625/zoo-management-system"><h3>Zoo Management System</h3></a>
+          <p>A professional web application built to manage zoo operations, including animal tracking, staff management, and ticketing systems.</p>
+          <div class="stack">
+            <span class="chip">PHP</span>
+            <span class="chip">Laravel</span>
+            <span class="chip">JavaScript</span>
+          </div>
+          <a class="project-link" href="https://github.com/Puja5625/zoo-management-system" target="_blank" rel="noopener noreferrer">Open Project Repository</a>
+        </article>
+
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Project Three" />
+          <a href=" https://psh.fwsdemopages.com "><h3>PSH project (Pyei Sone Hein Group Of Company)</h3></a>
+          <p>This is a demo project for PSH, designed to help manage company data, case studies, and media easily through a user-friendly system.</p>
+          <div class="stack">
+            <span class="chip">PHP</span>
+            <span class="chip">Laravel</span>
+            <span class="chip">CSs/Js</span>
+          </div>
+          <a class="project-link" href="https://github.com/Puja5625" target="_blank" rel="noopener noreferrer">View More Repositories</a>
+        </article>
+
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI2fHx8ZW58MHx8fHx8" alt="Project Three" />
+          <a href="https://github.com/Puja5625/Student-Registration-mini-pj-"><h3>Student Registeration (Mini pj)</h3></a>
+          <p> It includes instructions for initializing the file and pushing it to the repository via terminal commands.</p>
+          <div class="stack">
+            <span class="chip">Python</span>
+          </div>
+          <a class="project-link" href="https://github.com/Puja5625/Student-Registration-mini-pj-" target="_blank" rel="noopener noreferrer">Open Project Repository</a>
+        </article>
+
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1763568258672-7f0b6d2aeaf2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Project Three" />
+          <a href="https://github.com/Puja5625/calculator"><h3>Calculator</h3></a>
+          <p> A simple calculator project that performs basic arithmetic operations, developed using Python and managed through GitHub.</p>
+          <div class="stack">
+            <span class="chip">Python</span>
+          </div>
+          <a class="project-link" href="https://github.com/Puja5625/calculator" target="_blank" rel="noopener noreferrer">Open Project Repository</a>
+        </article>
+      </div>
+      <div class="github-showcase">
+        <div>
+          <h3>GitHub မှာ Project Code တွေကို တိုက်ရိုက်ကြည့်နိုင်ပါတယ်</h3>
+          <p>
+            Project အသစ်တွေ၊ source code updates တွေကို <strong>@Puja5625</strong> GitHub account မှာ
+            အမြဲတမ်းတင်ပေးထားပါတယ်။ Slide ပုံစံ project showcase နဲ့အတူ repository တစ်ခုချင်းစီကို
+            တိုက်ရိုက်ဖွင့်ပြီး code structure, commit history, README တွေကို လွယ်လင့်တကူကြည့်ရှုနိုင်ပါတယ်။
+          </p>
+        </div>
+        <div class="github-actions">
+          <a class="btn btn-primary" href="https://github.com/Puja5625" target="_blank" rel="noopener noreferrer">Visit My GitHub</a>
+          <a class="btn btn-ghost" href="https://github.com/Puja5625?tab=repositories" target="_blank" rel="noopener noreferrer">Browse All Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-subtitle">Core stack and tools I use to build end-to-end web products.</p>
+      <div class="skills-wrap">
+        <article class="card">
+          <div class="skill-list">
+            <span class="skill-pill">HTML5</span>
+            <span class="skill-pill">CSS3 </span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">PHP</span>
+            <span class="skill-pill">Laravel</span>
+            <span class="skill-pill">python</span>
+            <span class="skill-pill">bootstrap</span>
+            <span class="skill-pill">MySQL</span>
+            <span class="skill-pill">Git & GitHub</span>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Why Me?</h3>
+          <p>
+            I combine clean engineering with UI taste, so your product feels premium and performs reliably.
+            From landing pages to production apps, I focus on speed, quality, and business outcomes.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact reveal" id="contact">
+      <div class="card">
+        <h2 class="section-title">Let's Build Something</h2>
+        <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">
+          If you have a project idea, startup, or client work, I'm open to collaborations.
+        </p>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:saye5625@gmail.com">Email Me</a>
+          <a class="btn btn-ghost" href="tel:+959123456789">Call Me (+95 9 679 579 453)</a>
+          <a class="btn btn-ghost" href="https://github.com/Puja5625">GitHub</a>
+          <a class="btn btn-ghost" href="https://www.facebook.com/profile.php?id=100028212697275&mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/aye-sandar-b775b32b2/">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://wa.me/959679579453" target="_blank">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    
+      <div class="card developer reveal github-showcase" id="developer">
+        <h2 class="section-title">Passion for Coding</h2>
+        <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">
+          I believe great software starts with curiosity and creativity. As a web developer,
+          I enjoy turning ideas into functional and user-friendly applications.
+        </p>
+
+        <p style="max-width:700px;margin:20px auto;text-align:center;line-height:1.7;">
+          Writing code is more than just solving problems — it's about building experiences
+          that help people and businesses grow. I continuously learn new technologies,
+          improve my skills, and strive to write clean, efficient, and maintainable code.
+          Every project is an opportunity to innovate and create something meaningful.
+        </p>
+      </div>
+    
+  </main>
+
+  <script>
+    const revealNodes = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.14 });
+
+    revealNodes.forEach((node) => observer.observe(node));
+
+    const words = ['Fast', 'Elegant', 'Scalable', 'Impactful'];
+    const dynamicWord = document.getElementById('dynamic-word');
+    let i = 0;
+
+    setInterval(() => {
+      i = (i + 1) % words.length;
+      dynamicWord.textContent = words[i];
+    }, 1600);
+
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 760) {
+            navLinks.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 760) {
+          navLinks.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
